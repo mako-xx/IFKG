@@ -88,10 +88,9 @@ def answer_generation(query, graph_result):
     return html_response
 
 def format_response_to_html(response):
-    # 使用正则表达式提取每个步骤并进行格式化
     steps = re.split(r'\n\d+\.\s\*\*', response)
     html_response = "<html><body>"
-    html_response += f"<p>{steps[0]}</p>"  # 引言部分
+    html_response += f"<p>{steps[0]}</p>" 
 
     for i, step in enumerate(steps[1:], start=1):
         html_response += f"<h2>Step {i}</h2><p>{step.strip()}</p>"

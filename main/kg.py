@@ -19,62 +19,6 @@ from langchain.graphs import Neo4jGraph
 from sagemaker.huggingface import HuggingFaceModel, get_huggingface_llm_image_uri
 
 
-# def load_data_and_store_openai_embeddings_in_neo4j_vector():
-#     try:
-#         print(
-#             f"\nLoad data from Wikipedia and store OpenAI embeddings in a Neo4j Vector\n\t"
-#         )
-
-#         raw_docs = load_wikipedia_data()
-#         processed_docs = process_wikipedia_data(raw_docs)
-#         store_data_in_neo4j(processed_docs, neo4j_credentials)
-
-#     except Exception as e:
-#         print(f"\n\tAn unexpected error occurred: {e}")
-
-
-# def query_against_an_existing_neo4j_vector(index_name, query):
-#     try:
-#         print(f"\nQuery against an existing Neo4j Vector\n\tQuery: {query}\n")
-
-#         # Instantiate Neo4j vector from an existing vector
-#         neo4j_vector = initialize_neo4j_vector(neo4j_credentials, index_name)
-
-#         # Perform the similarity search and display results
-#         results = perform_similarity_search(neo4j_vector, query)
-
-#         # Close the Neo4j connection
-#         neo4j_vector._driver.close()
-
-#         # Do something with the results
-#         print(results[0].page_content)
-
-#     except Exception as e:
-#         print(f"\n\tAn unexpected error occurred: {e}")
-
-
-# def question_answer_workflow_with_langchain(index_name, query):
-#     try:
-#         print(f"\nQuestion/Answer workflow with LangChain\n\tQuery: {query}\n")
-
-#         neo4j_vector = initialize_neo4j_vector(neo4j_credentials, index_name)
-
-#         # Initialize and execute the QA workflow
-#         qa_workflow = initialize_qa_workflow(
-#             neo4j_vector, neo4j_credentials["openai_api_secret_key"]
-#         )
-
-#         qa_results = execute_qa_workflow(
-#             neo4j_vector, qa_workflow, query, neo4j_credentials["openai_api_secret_key"]
-#         )
-#         print(qa_results["answer"])
-
-#         # Close the Neo4j connection
-#         neo4j_vector._driver.close()
-
-#     except Exception as e:
-#         print(f"\n\tAn unexpected error occurred: {e}")
-
 def create_graph():
     try:
         print(
@@ -138,10 +82,9 @@ def answer_generation(query, graph_result):
     print(html_response)
 
 def format_response_to_html(response):
-    # 使用正则表达式提取每个步骤并进行格式化
     steps = re.split(r'\n\d+\.\s\*\*', response)
     html_response = "<html><body>"
-    html_response += f"<p>{steps[0]}</p>"  # 引言部分
+    html_response += f"<p>{steps[0]}</p>" 
 
     for i, step in enumerate(steps[1:], start=1):
         html_response += f"<h2>Step {i}</h2><p>{step.strip()}</p>"
